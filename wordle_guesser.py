@@ -1,22 +1,20 @@
-# -*- coding: utf-8 -*-
 """
 Wordle guesser script
 """
 
-import nltk.corpus
 import re
 
 from nltk.corpus import words
-words.words()
-allwords = words.words().copy()
+fivelwords = [word for word in words.words() if len(word) == 5]
 
-fivelwords = [word for word in allwords if len(word) == 5]
+# introduction
+print("Welcome to the Wordle guesser script. You will be asked for 3 inputs:\n* For letters at known positions, type any letters whose position is known, and underscores where the letter is not known (e.g. 'f_b__').\n* For letters present elsewhere in the word: for each position enter one or more letters not present here, or an underscore if none, separated by commas (e.g. l,_,_,ae,_) .\n* For letters not present in the word, enter all the letters as one string (e.g. 'imps'), or leave blank if none.")
 
 # get the known letters
 while True:
-    known_letters = input("Enter the word with letters where their position is known, and underscores where the letter is not known (e.g. 'F_B___'): " )
-    if (len(known_letters) != 5) or not known_letters.replace("_", "").isalpha():
-        print("Input must be 5 characters long and consist of only letters and underscores")
+    known_letters = input("Enter letters at known positions: " )
+    if (len(known_letters) != 5) or not (known_letters.replace("_", "").isalpha() or known_letters == "_____"):
+        print("Input must be 5 characters long and consist of only letters and underscores.")
         continue
     else:
         break
@@ -29,11 +27,9 @@ for i in range(0,5):
 
 # get letters that are present but not in certain positions
 while True:
-    other_letters = input("For each position enter the letters not present here but present elsewhere in the word, using an underscore if none, separated by commas (e.g. _,t,_,_,io) :")
-    if (other_letters.count(",") != 4) or not re.sub("_|,","",other_letters).isalpha():
-        print(other_letters.count(","))
-        print(other_letters.replace("_|,", ""))
-        print("Input must be five strings of letters or underscores, separated by commas")
+    other_letters = input("Enter letters present elsewhere in the word: ")
+    if (other_letters.count(",") != 4) or not (re.sub("_|,","",other_letters).isalpha() or re.sub("_|,","",other_letters) == ""):
+        print("Input must be five strings of letters or underscores, separated by commas.")
         continue
     else:
         break
@@ -49,9 +45,9 @@ letters_in = set(letters_in)
 
 # get letters not in the word
 while True:
-    letters_out = input("Enter the letters NOT in the word as one string (e.g. 'ertls'), or leave blank if none:")
+    letters_out = input("Enter letters NOT in the word: ")
     if not letters_out.isalpha() and letters_out != "":
-        print("Input must be a string of letters or blank")
+        print("Input must be either a string of letters or blank.")
         continue
     else:
         break
@@ -74,5 +70,5 @@ filtered_all = [word for word in filtered_known
                 word[2] not in other_letters[2] and
                 word[3] not in other_letters[3] and
                 word[4] not in other_letters[4])]
-print("Suggested words: ",filtered_all)
-
+print("Suggested words: ")
+print(*filtered_all, sep=", ") 
