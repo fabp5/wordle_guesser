@@ -8,7 +8,7 @@ from nltk.corpus import words
 fivelwords = [word for word in words.words() if len(word) == 5]
 
 # introduction
-print("Welcome to the Wordle guesser script. You will be asked for 3 inputs:\n* For letters at known positions, type any letters whose position is known, and underscores where the letter is not known (e.g. 'f_b__').\n* For letters present elsewhere in the word: for each position enter one or more letters not present here, or an underscore if none, separated by commas (e.g. l,_,_,ae,_) .\n* For letters not present in the word, enter all the letters as one string (e.g. 'imps'), or leave blank if none.")
+print("Welcome to the Wordle guesser script. You will be asked for 3 inputs:\n\n* For letters at known positions, type any letters whose position is known, and underscores where the letter is not known (e.g. 'f_b__').\n\n* For letters present elsewhere in the word: for each position enter one or more letters not present here, or an underscore if none, separated by commas (e.g. l,_,_,ae,_).\n\n* For letters not present in the word, enter all the letters as one string (e.g. 'imps'), or leave blank if none.")
 
 # get the known letters
 while True:
@@ -70,5 +70,5 @@ filtered_all = [word for word in filtered_known
                 word[2] not in other_letters[2] and
                 word[3] not in other_letters[3] and
                 word[4] not in other_letters[4])]
-print("Suggested words: ")
-print(*filtered_all, sep=", ") 
+print("\nSuggested words: ")
+print(*set(filtered_all), sep=", ") 
