@@ -3,6 +3,7 @@ Wordle guesser script
 """
 
 import re
+import string
 
 from nltk.corpus import words
 fivelwords = [word for word in words.words() if len(word) == 5]
@@ -23,8 +24,8 @@ while True:
 known_letters = list(known_letters)
 for i in range(0,5):
     if known_letters[i] == "_":
-        known_letters[i] = "abcdefghijklmnopqrstuvwxyz"
-
+        known_letters[i] = string.ascii_lowercase
+        
 # get letters that are present but not in certain positions
 while True:
     other_letters = input("Enter letters present elsewhere in the word: ")
